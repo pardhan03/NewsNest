@@ -11,7 +11,6 @@ import React from "react";
 import { Colors } from "../constants/Color";
 import Animated, { FadeInRight } from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
-
 const index = () => {
   const router = useRouter();
   return (
