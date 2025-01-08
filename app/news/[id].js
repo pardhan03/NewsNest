@@ -13,9 +13,11 @@ import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { Colors } from "../../constants/Color";
 import moment from "moment";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const NewDetail = () => {
   const [news, setNews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [bookmark, setBookmark] = useState(false);
   const { id } = useLocalSearchParams();
 
   const getNews = async () => {
@@ -33,9 +35,57 @@ const NewDetail = () => {
       setIsLoading(false);
     }
   };
+
+  const handleBookmark = async (newsId) => {
+    setBookmark(true);
+
+    await AsyncStorage.getItem("bookmark").then((token) => {
+      const res = JSON.parse(token);
+      if (res !== null) {
+        let data = res.find((value) => value === newsId);
+        if (data == null) {
+          res.push(newsId);
+          AsyncStorage.setItem("bookmark", JSON.stringify(res));
+          alert("News saved");
+        }
+      } else {
+        let bookmark = [];
+        bookmark.push(newsId);
+        AsyncStorage.setItem("bookmark", JSON.stringify(bookmark));
+        alert("News saved");
+      }
+    });
+  };
+
+  const handleRemoveBookmark = async (newsId) => {
+    setBookmark(false);
+    const bookmark = await AsyncStorage.getItem("bookmark").then((token) => {
+      const res = JSON.parse(token);
+      return res?.filter((id) => id !== newsId);
+    });
+    AsyncStorage.setItem("bookmark", JSON.stringify(bookmark));
+    alert("News unsaved");
+  };
+
+  const handleGetBookmark = async (newsId) => {
+    await AsyncStorage.getItem("bookmark").then((token) => {
+      const res = JSON.parse(token);
+      if (res !== null) {
+        let data = res.find((value) => value === newsId);
+        return data == null ? setBookmark(false) : setBookmark(true);
+      }
+    });
+  };
+
   useEffect(() => {
     getNews();
   }, []);
+
+  useEffect(() => {
+    if (!isLoading) {
+      handleGetBookmark(news[0]?.article_id);
+    }
+  }, [isLoading]);
 
   return (
     <>
@@ -51,8 +101,18 @@ const NewDetail = () => {
           },
           headerRight: () => {
             return (
-              <TouchableOpacity onPress={() => {}}>
-                <Ionicons name="heart-outline" size={22} />
+              <TouchableOpacity
+                onPress={() => {
+                  bookmark
+                    ? handleRemoveBookmark(news[0]?.article_id)
+                    : handleBookmark(news[0]?.article_id);
+                }}
+              >
+                <Ionicons
+                  name={bookmark ? "heart" : "heart-outline"}
+                  size={22}
+                  color={bookmark ? "red" : Colors.black}
+                />
               </TouchableOpacity>
             );
           },
