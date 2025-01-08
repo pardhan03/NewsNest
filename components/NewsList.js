@@ -1,7 +1,8 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { Colors } from "../constants/Color";
 import Loading from "./Loading";
+import { Link } from "expo-router";
 
 const NewsList = ({ newsList }) => {
   return (
@@ -10,20 +11,29 @@ const NewsList = ({ newsList }) => {
         <Loading size="large" />
       ) : (
         newsList?.map((item, index) => (
-          <View key={index} style={styles.itemContainer}>
-            <Image source={{ uri: item.image_url }} style={styles.itemImg} />
-            <View style={styles.itemInfo}>
-              <Text style={styles.itemCategory}>{item.category}</Text>
-              <Text style={styles.itemTitle}>{item.title}</Text>
-              <View style={styles.itemSourceInfo}>
+          <Link href={`/news/${item.article_id}`} asChild>
+            <TouchableOpacity>
+              <View key={index} style={styles.itemContainer}>
                 <Image
-                  source={{ uri: item.source_icon }}
-                  style={styles.itemSourceImage}
+                  source={{ uri: item.image_url }}
+                  style={styles.itemImg}
                 />
-                <Text style={styles.itemSourceName}>{item.source_name}</Text>
+                <View style={styles.itemInfo}>
+                  <Text style={styles.itemCategory}>{item.category}</Text>
+                  <Text style={styles.itemTitle}>{item.title}</Text>
+                  <View style={styles.itemSourceInfo}>
+                    <Image
+                      source={{ uri: item.source_icon }}
+                      style={styles.itemSourceImage}
+                    />
+                    <Text style={styles.itemSourceName}>
+                      {item.source_name}
+                    </Text>
+                  </View>
+                </View>
               </View>
-            </View>
-          </View>
+            </TouchableOpacity>
+          </Link>
         ))
       )}
     </View>

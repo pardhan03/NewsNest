@@ -5,7 +5,7 @@ import { Colors } from "../constants/Color";
 
 const SearchBar = () => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingHorizontal: 20 }]}>
       <View style={styles.searchBar}>
         <Ionicons name="search-outline" size={20} color={Colors.lightGrey} />
         <TextInput
@@ -24,7 +24,6 @@ export default SearchBar;
 const styles = StyleSheet.create({
   container: {
     marginVertical: 20,
-    marginHorizontal: 20,
   },
   searchBar: {
     backgroundColor: "#e4e4e4",
