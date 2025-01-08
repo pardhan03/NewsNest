@@ -47,7 +47,7 @@ const setting = () => {
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.itemBtn}>
-          <Text style={[styles.itemBtnText, { color: "red " }]}>Lgout</Text>
+          <Text style={[styles.itemBtnText, { color: "red " }]}>Logout</Text>
           <MaterialIcons name="logout" size={16} color="red" />
         </TouchableOpacity>
       </View>
