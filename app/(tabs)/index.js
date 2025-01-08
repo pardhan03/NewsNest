@@ -60,7 +60,7 @@ const index = () => {
   return (
     <ScrollView style={{ paddingTop: safeTop }}>
       <Header />
-      <SearchBar />
+      <SearchBar horizontalpadding={true} />
       {isLoading ? (
         <Loading size="large" />
       ) : (

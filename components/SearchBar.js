@@ -3,9 +3,11 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Color";
 
-const SearchBar = () => {
+const SearchBar = ({ horizontalpadding }) => {
   return (
-    <View style={[styles.container, { paddingHorizontal: 20 }]}>
+    <View
+      style={[styles.container, horizontalpadding && { paddingHorizontal: 20 }]}
+    >
       <View style={styles.searchBar}>
         <Ionicons name="search-outline" size={20} color={Colors.lightGrey} />
         <TextInput
