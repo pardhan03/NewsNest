@@ -3,7 +3,7 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Color";
 
-const SearchBar = ({ horizontalpadding }) => {
+const SearchBar = ({ horizontalpadding, setSearchQuery }) => {
   return (
     <View
       style={[styles.container, horizontalpadding && { paddingHorizontal: 20 }]}
@@ -15,6 +15,7 @@ const SearchBar = ({ horizontalpadding }) => {
           placeholderTextColor={Colors.lightGrey}
           style={styles.searchText}
           autoCapitalize="none"
+          onChangeText={(query) => setSearchQuery(query)}
         />
       </View>
     </View>

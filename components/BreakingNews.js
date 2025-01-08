@@ -38,7 +38,7 @@ const BreakingNews = ({ NewsList }) => {
       <Animated.FlatList
         ref={ref}
         data={data}
-        keyExtractor={(_, index) => `list_item${index}`}
+        keyExtractor={(_, index) => index}
         renderItem={({ item, index }) => {
           return (
             <SliderItem slideItem={item} index={index} scrollX={scrollX} />
